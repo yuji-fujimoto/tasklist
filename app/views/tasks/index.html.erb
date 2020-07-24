@@ -1,3 +1,6 @@
+<% if logged_in? %>
+  <p>ログイン完了ユーザ: <%= current_user.name %></p>
+
 <h1>タスク一覧</h1>
 
 <ul>
@@ -7,3 +10,17 @@
 </ul>
 
 <%= link_to '新規タスクの投稿', new_task_path %>
+
+
+
+<% else %>
+
+<h1>Welcome to the tasklist</h1>
+
+<!--サインアップとログインのボタン-->
+<ul>
+  <li><%=link_to 'Sign up now!', signup_path %> </li>
+  <li></li>
+</ul>
+
+<% end %>
