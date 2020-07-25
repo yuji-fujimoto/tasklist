@@ -1,9 +1,11 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
   before_action :require_user_logged_in, only: [:index, :show]
+  before_action :correct_user, only: [:destroy]
   
   def index
-    @tasks = Task.all
+    user = @current_user
+    @tasks = user.tasks
   end
   
   def show
@@ -15,6 +17,7 @@ class TasksController < ApplicationController
   
   def create
     @task = Task.new(task_params)
+    @task.user = current_user
     
     if @task.save
       flash[:success] = 'Task が正常に保存されました'
@@ -46,13 +49,21 @@ class TasksController < ApplicationController
     redirect_to tasks_url
   end
   
+  
   private
   
   def set_task
     @task = Task.find(params[:id])
   end
-  #Strong Parameter
+  
   def task_params
-    params.require(:task).permit(:content, :status)
+    params.require(:task).permit(:content, :status, :user_id)
+  end
+  
+  def correct_user
+    @task = current_user.tasks.find_by(id: params[:id])
+    unless @task
+      redirect_to root_url
+    end
   end
 end

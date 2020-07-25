@@ -11,16 +11,8 @@
 
 <%= link_to '新規タスクの投稿', new_task_path %>
 
+<!--動作確認のためにログアウトボタンも実装しました-->
+<%= link_to 'ログアウトする', logout_path, method: :delete %>
 
-
-<% else %>
-
-<h1>Welcome to the tasklist</h1>
-
-<!--サインアップとログインのボタン-->
-<ul>
-  <li><%=link_to 'Sign up now!', signup_path %> </li>
-  <li></li>
-</ul>
 
 <% end %>
