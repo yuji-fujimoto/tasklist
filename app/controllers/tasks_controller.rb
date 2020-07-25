@@ -4,8 +4,9 @@ class TasksController < ApplicationController
   before_action :correct_user, only: [:destroy]
   
   def index
-    user = @current_user
-    @tasks = user.tasks
+    # user = @current_user
+    # @tasks = user.tasks　
+    @tasks = current_user.tasks
   end
   
   def show
@@ -16,8 +17,8 @@ class TasksController < ApplicationController
   end
   
   def create
-    @task = Task.new(task_params)
-    @task.user = current_user
+    @task = current_user.tasks.build(task_params)
+    # :content, :status, current_userの:user_idで@taskを生成
     
     if @task.save
       flash[:success] = 'Task が正常に保存されました'
@@ -57,7 +58,7 @@ class TasksController < ApplicationController
   end
   
   def task_params
-    params.require(:task).permit(:content, :status, :user_id)
+    params.require(:task).permit(:content, :status)
   end
   
   def correct_user
