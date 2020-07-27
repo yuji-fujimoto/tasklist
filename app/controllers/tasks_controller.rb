@@ -10,6 +10,7 @@ class TasksController < ApplicationController
   end
   
   def show
+    correct_user
   end
   
   def new
@@ -30,6 +31,7 @@ class TasksController < ApplicationController
   end
   
   def edit
+    correct_user
   end
   
   def update
